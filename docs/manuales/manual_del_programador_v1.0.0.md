@@ -1,8 +1,6 @@
 
 ---
 
-## `manual_del_programador_v1.0.0.md`
-
 # 📘 MANUAL TÉCNICO DEL PROGRAMADOR Y ARQUITECTURA DE CÓDIGO
 
 **Proyecto:** Mini Juego "Piedra, Papel o Tijera" con Persistencia en Disco (`juegopiedra`)
