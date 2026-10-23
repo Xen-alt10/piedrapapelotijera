@@ -5,23 +5,15 @@
 
 **Proyecto:** Mini Juego "Piedra, Papel o Tijera" con Persistencia en Disco (`juegopiedra`)
 
-**Institución:** E.E.S.T. N° 999 "Österreichische Schule der Nationalökonomie" — Vicente López
+**Institución:** E.E.S.T. N°1 — Vicente López
 
 **Asignatura:** Laboratorio de Programación (LPR) — 5° Año
 
-**Docente:** Mansilla Muñoz York Elías (Grupo 99)
+**Docente:** Mansilla Muñoz York Elías
 
-**Autor / Grupo:** Carl Menger (Grupo 99)
+**Autor / Grupo:** Alexander Veit / GAMY
 
-**Fecha:** 9 de octubre de 2026 | **Versión:** v1.0.0
-
----
-
-## 📄 CONTROL DE VERSIONES Y CHANGELOG
-
-| Versión | Fecha      | Autor     | Descripción de Cambios |
-|---------|------------|-----------|------------------------|
-| v1.0.0  | 09/10/2026 | Prof. York | Versión inicial de la suite modular de C++ con soporte Dual-Remote. |
+**Fecha:** 23 de octubre de 2026 | **Versión:** v1.0.0
 
 ---
 
@@ -33,7 +25,7 @@
 - **Entorno Integrado:** Visual Studio Code o terminal PowerShell 5.1+.
 - **Librerías Estándar C++:** `<iostream>`, `<fstream>`, `<string>`, `<cstdlib>`, `<ctime>`.
 
-### Estructura del Repositorio (`juegopiedra`)
+### Estructura del Repositorio (`juegopiedrapapelotijera`)
 
 ```
 piedrapapelotijera/
