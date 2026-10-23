@@ -71,7 +71,7 @@ struct Partida {
 - Alineación en memoria: Los miembros residen contiguos en memoria volátil (RAM) durante la ejecución de la partida.
 - Complejidad espacial: O(1) por cada objeto instanciado en el ámbito de la función.
 
-2.2 Módulo void jugarPartida(int& contadorID)
+### 2.2 Módulo void jugarPartida(int& contadorID)
 
 Parámetro: Pass-by-reference (int& contadorID) para autoincrementar secuencialmente el identificador global de partidas 1, 2, 3, …, N.
 Manejo de Búfer: Invoca cin.ignore() para limpiar el carácter de salto de línea pendiente (\n) acumulado por el cin >> opcion previo.
@@ -81,7 +81,7 @@ opcIA = (rand() % 3) + 1;
 ```
 Evaluación de Reglas: Mapea enteros a cadenas ("Piedra", "Papel", "Tijera") y determina la victoria, empate o derrota mediante comparaciones condicionales.
 
-2.3 Módulo void guardarEnDisco(const Partida& p)
+### 2.3 Módulo void guardarEnDisco(const Partida& p)
 Flujo de Salida:
 ofstream archivo("historial_partidas.txt", ios::app);
 
@@ -91,7 +91,7 @@ idPartida,jugador,eleccionJugador,eleccionIA,resultado\n
 
 Tratamiento de Errores: Valida !archivo.is_open() imprimiendo un mensaje de fallo en el flujo de error estándar cerr.
 
-2.4 Módulo void leerHistorialDisco()
+### 2.4 Módulo void leerHistorialDisco()
 Flujo de Entrada:
 ifstream archivo("historial_partidas.txt");
 
