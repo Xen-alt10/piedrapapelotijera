@@ -1,7 +1,7 @@
 /* 
    ====================================================================
    Materia: Laboratorio de Programación (LPR) — 5° Año
-   Institución: E.E.S.T. N° 100 "Toy Story" — Vicente López
+   Institución: E.E.S.T. N° 1 — Vicente López
    Archivo: src/main.cpp
    Actividad 7: Mini Juego Piedra, Papel o Tijera + Persistencia en Disco
    ====================================================================
