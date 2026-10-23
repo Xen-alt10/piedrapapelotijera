@@ -1,9 +1,11 @@
 /* 
    ====================================================================
    Materia: Laboratorio de Programación (LPR) — 5° Año
-   Institución: E.E.S.T. N° 1 — Vicente López
+   Institución: E.E.S.T. N°1  — Vicente López
    Archivo: src/main.cpp
    Actividad 7: Mini Juego Piedra, Papel o Tijera + Persistencia en Disco
+   Docente: Mansilla Muñoz York
+   Estudiante: Alexander Veit 
    ====================================================================
 */
 
@@ -12,10 +14,11 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <limits>
 
 using namespace std;
 
-// 1. Estructura de datos para representar una partida
+// Estructura de datos para modelar una partida
 struct Partida {
     int idPartida;
     string jugador;
@@ -24,30 +27,36 @@ struct Partida {
     string resultado;
 };
 
-// Prototipos de funciones modulares
+// Prototipos de funciones
 void jugarPartida(int& contadorID);
 void guardarEnDisco(const Partida& p);
 void leerHistorialDisco();
+void limpiarBuffer();
 
 int main() {
-    // Inicializar la semilla para los números aleatorios de la IA
-    srand(time(0));
+    srand(static_cast<unsigned int>(time(0)));
     
     int contadorID = 1;
     int opcion = 0;
 
     cout << "=====================================================" << endl;
     cout << "  LPR 2026 - ACTIVIDAD 7: PIEDRA, PAPEL O TIJERA      " << endl;
-    cout << "  Estudiante / Grupo: Alexander Luca Veit / GAMY         " << endl;
+    cout << "  Resolucion de Catedra - Modelo de Replicacion       " << endl;
+    cout << "  Estudiante / Grupo: Alexander Veit / GAMY           " << endl;
     cout << "=====================================================" << endl;
 
     do {
         cout << "\n--- MENU PRINCIPAL DE JUEGO Y PERSISTENCIA ---" << endl;
-        cout << "1. Jugar Partida (Piedra, Papel o Tijera)" << endl;
-        cout << "2. Ver Historial de Partidas Guardadas en Disco (.txt)" << endl;
+        cout << "1. Jugar (Piedra, Papel o Tijera)" << endl;
+        cout << "2. Ver Partidas Guardadas en el Historial del Disco (.txt)" << endl;
         cout << "3. Salir del Sistema" << endl;
-        cout << "Ingrese una opcion (1-3): ";
-        cin >> opcion;
+        cout << "Ingresa una opcion (1-3): ";
+        
+        if (!(cin >> opcion)) {
+            cout << "\n[ERROR] Entrada invalida. Ingresa un numero valido de la lista." << endl;
+            limpiarBuffer();
+            continue;
+        }
 
         if (opcion == 1) {
             jugarPartida(contadorID);
@@ -56,10 +65,10 @@ int main() {
             leerHistorialDisco();
         } 
         else if (opcion == 3) {
-            cout << "\n[SISTEMA] Saliendo del programa... Datos resguardados en disco." << endl;
+            cout << "\n[SISTEMA] Saliendo del juego... Los Datos estan resguardados en disco." << endl;
         } 
         else {
-            cout << "\n[ERROR] Opcion invalida. Reintente." << endl;
+            cout << "\n[ERROR] Opcion fuera de rango (1-3). Reintenta." << endl;
         }
 
     } while (opcion != 3);
@@ -67,81 +76,98 @@ int main() {
     return 0;
 }
 
-// Función para procesar la jugada contra la IA
+void limpiarBuffer() {
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
+
 void jugarPartida(int& contadorID) {
     Partida p;
     p.idPartida = contadorID++;
 
     cout << "\n--- NUEVA PARTIDA #" << p.idPartida << " ---" << endl;
-    cout << "Ingrese su Nombre / Nickname: ";
-    cin.ignore(); // Limpieza de búfer
+    cout << "Ingresa tu Nombre / Apodo / Nickname: ";
+    limpiarBuffer();
     getline(cin, p.jugador);
 
     int opcJugador = 0;
-    cout << "\nElija su jugada:" << endl;
-    cout << "1. Piedra" << endl;
-    cout << "2. Papel" << endl;
-    cout << "3. Tijera" << endl;
-    cout << "Opcion (1-3): ";
-    cin >> opcJugador;
+    do {
+        cout << "\nEleji tu jugada:" << endl;
+        cout << "1. Piedra" << endl;
+        cout << "2. Papel" << endl;
+        cout << "3. Tijera" << endl;
+        cout << "Opcion (1-3): ";
+        cin >> opcJugador;
 
-    // Asignar selección del usuario
+        if (cin.fail() || opcJugador < 1 || opcJugador > 3) {
+            cout << "[ERROR] Seleccion invalida. Elija 1, 2 o 3." << endl;
+            limpiarBuffer();
+        } else {
+            break;
+        }
+    } while (true);
+
     if (opcJugador == 1) p.eleccionJugador = "Piedra";
     else if (opcJugador == 2) p.eleccionJugador = "Papel";
     else p.eleccionJugador = "Tijera";
 
-    // Elección aleatoria de la IA (1 a 3)
     int opcIA = (rand() % 3) + 1;
     if (opcIA == 1) p.eleccionIA = "Piedra";
     else if (opcIA == 2) p.eleccionIA = "Papel";
     else p.eleccionIA = "Tijera";
 
-    // Evaluar reglas del juego
     cout << "\n[JUGADA] " << p.jugador << " eligio: " << p.eleccionJugador << endl;
     cout << "[JUGADA] La IA eligio: " << p.eleccionIA << endl;
 
     if (p.eleccionJugador == p.eleccionIA) {
-        p.resultado = "Empate";
+        p.resultado = "Empataste!";
     } 
     else if ((p.eleccionJugador == "Piedra" && p.eleccionIA == "Tijera") ||
              (p.eleccionJugador == "Papel" && p.eleccionIA == "Piedra") ||
              (p.eleccionJugador == "Tijera" && p.eleccionIA == "Papel")) {
-        p.resultado = "Victoria";
+        p.resultado = "Ganaste!";
     } 
     else {
-        p.resultado = "Derrota";
+        p.resultado = "Perdiste!";
     }
 
     cout << "=> RESULTADO: " << p.resultado << "!" << endl;
 
-    // Persistir el resultado inmediatamente en el archivo
     guardarEnDisco(p);
 }
 
-// Función para ESCRIBIR en el archivo de texto en disco
 void guardarEnDisco(const Partida& p) {
-    // ios::app permite agregar al final sin borrar partidas anteriores
+    // Intenta abrir primero en la subcarpeta src/
     ofstream archivo("src/historial_partidas.txt", ios::app);
+
+    // Si no existe la carpeta relativa src/, guarda directamente en el directorio actual
+    if (!archivo.is_open()) {
+        archivo.open("historial_partidas.txt", ios::app);
+    }
 
     if (!archivo.is_open()) {
         cerr << "[ERROR] No se pudo abrir el archivo para guardar la partida." << endl;
         return;
     }
 
-    // Guardado de datos separados por comas (Formato CSV)
-    archivo << p.idPartida << "," 
-            << p.jugador << "," 
-            << p.eleccionJugador << "," 
-            << p.eleccionIA << "," 
+    archivo << p.idPartida << ","
+            << p.jugador << ","
+            << p.eleccionJugador << ","
+            << p.eleccionIA << ","
             << p.resultado << endl;
 
     archivo.close();
-    cout << "[DISCO] Partida resguardada con exito en 'historial_partidas.txt'." << endl;
+    cout << "[DISCO] Partida resguardada con exito en el historial del disco." << endl;
 }
 
-// Función para LEER el historial persistido desde el archivo
 void leerHistorialDisco() {
+    // Intenta abrir primero desde src/
     ifstream archivo("src/historial_partidas.txt");
+
+    // Si falla, busca en la raíz local
+    if (!archivo.is_open()) {
+        archivo.open("historial_partidas.txt");
+    }
 
     if (!archivo.is_open()) {
         cout << "\n[AVISO] Aun no existen partidas guardadas en disco." << endl;
@@ -155,7 +181,6 @@ void leerHistorialDisco() {
     string idStr, jugador, elJug, elIA, resultado;
     int total = 0;
 
-    // Lectura secuencial delimitada por comas
     while (getline(archivo, idStr, ',') &&
            getline(archivo, jugador, ',') &&
            getline(archivo, elJug, ',') &&
@@ -174,7 +199,7 @@ void leerHistorialDisco() {
     if (total == 0) {
         cout << "[AVISO] El archivo de historial esta vacio." << endl;
     } else {
-        cout << "\n[SISTEMA] Total de registros leidos desde disco: " << total << endl;
+        cout << "\n[SISTEMA] Total de registros leidos desde el disco: " << total << endl;
     }
     cout << "=====================================================" << endl;
 }
